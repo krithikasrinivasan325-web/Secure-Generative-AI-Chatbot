@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Gemini Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <meta name="description" content="A secure chatbot protected by SASE, JEM, and DeepFool adversarial detection">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-inner">
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>SecureChat</h2>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-lock"></i> Security Features</h3>
+                    <div class="security-features">
+                        <div class="security-feature">
+                            <div class="feature-icon"><i class="fas fa-filter"></i></div>
+                            <div class="feature-info">
+                                <h4>SASE Protection</h4>
+                                <p>Secure Access Service Edge filtering for harmful patterns</p>
+                            </div>
+                        </div>
+                        <div class="security-feature">
+                            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                            <div class="feature-info">
+                                <h4>JEM Analysis</h4>
+                                <p>Joint Energy Model for detecting unusual inputs</p>
+                            </div>
+                        </div>
+                        <div class="security-feature">
+                            <div class="feature-icon"><i class="fas fa-bug"></i></div>
+                            <div class="feature-info">
+                                <h4>DeepFool Detection</h4>
+                                <p>Advanced adversarial input detection</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Workflow Section -->
+                <div class="sidebar-section workflow-section">
+                    <h3><i class="fas fa-sitemap"></i> How It Works</h3>
+                    
+                    <div class="workflow-container">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>User Input</h4>
+                                <p>Your message is captured and prepared for security analysis</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>SASE Filtering</h4>
+                                <p>Checks for known attack patterns and suspicious content</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Text Embedding</h4>
+                                <p>Converts your message into a numerical representation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>JEM Analysis</h4>
+                                <p>Energy-based detection of unusual inputs</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>DeepFool Detection</h4>
+                                <p>Tests for adversarial perturbations designed to manipulate AI</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h4>Gemini API</h4>
+                                <p>Only if all security checks pass, your input is sent to Gemini AI</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step final-step">
+                            <div class="step-number"><i class="fas fa-check"></i></div>
+                            <div class="step-content">
+                                <h4>Secure Response</h4>
+                                <p>The safe, verified response is displayed to you</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="security-info-toggle" onclick="toggleTechnicalInfo()">
+                        <i class="fas fa-info-circle"></i> Show Technical Details
+                    </div>
+                    
+                    <div class="technical-info" id="technicalInfo" style="display: none;">
+                        <h4>Technical Implementation</h4>
+                        <ul>
+                            <li><strong>SASE (Secure Access Service Edge):</strong> Pattern-based security check that scans inputs for harmful content like SQL injection attempts, code execution patterns, and credential harvesting.</li>
+                            <li><strong>JEM (Joint Energy-based Model):</strong> Uses an energy function to identify statistical anomalies in inputs that might represent novel attacks not covered by pattern matching.</li>
+                            <li><strong>DeepFool Algorithm:</strong> Creates gradient-based perturbations to test how a slight modification affects the model's output. Large changes indicate potential adversarial examples designed to manipulate the AI.</li>
+                            <li><strong>Text Embedding:</strong> Uses BERT to create vector representations of text that can be analyzed by the security models.</li>
+                            <li><strong>Layered Protection:</strong> Security checks must all pass sequentially before the input reaches the Gemini API, ensuring comprehensive protection.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-info-circle"></i> About</h3>
+                    <p>This secure chatbot implements multiple layers of protection to safeguard against adversarial attacks while providing helpful responses.</p>
+                    <p>Built for demonstration of multi-layered AI security using Google's Gemini API.</p>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-indicator">
+                        <span id="statusDot" class="status-dot active"></span>
+                        <span id="statusText">System Active</span>
+                    </div>
+                </div>
+                <button id="resetButton" onclick="resetChat()">
+                    <i class="fas fa-sync-alt"></i> Reset Chat
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <header class="chat-header">
+                <div class="chat-header-left">
+                    <h1>Secure Gemini Chatbot</h1>
+                    <p class="subtitle">Protected with SASE, JEM & DeepFool Adversarial Detection</p>
+                </div>
+                <div class="chat-header-right">
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i> Protected
+                    </div>
+                </div>
+            </header>
+            
+            <div class="chat-container" id="chatContainer">
+                <!-- Welcome message will appear here on load -->
+            </div>
+            
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off" />
+                </div>
+                <button id="sendButton" onclick="sendMessage()" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add a welcome message when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            appendMessage('bot', 'Welcome to the Secure Gemini Chatbot! I\'m protected by multiple security layers to provide safe and helpful responses. How can I assist you today?');
+        });
+    
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+            
+            // Update status
+            setStatus('processing');
+            
+            // Display user message
+            appendMessage('user', message);
+            userInput.value = '';
+            
+            // Send to backend
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset status
+                setStatus('active');
+                
+                // Display bot response
+                appendMessage('bot', data.response);
+                
+                // Display security alert if any
+                if (data.alert) {
+                    appendMessage('alert', data.alert);
+                }
+                
+                // Add security log
+                if (data.security_log) {
+                    appendSecurityLog(data.security_log);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setStatus('error');
+                appendMessage('alert', 'Failed to get response from the server.');
+            });
+        }
+        
+        function appendMessage(type, content) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            if (type === 'user') {
+                messageDiv.className = 'message user-message';
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-text">${content}</div>
+                        <div class="message-time"><i class="fas fa-check"></i> ${timestamp}</div>
+                    </div>
+                    <div class="avatar user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+            } else if (type === 'bot') {
+                messageDiv.className = 'message bot-message';
+                messageDiv.innerHTML = `
+                    <div class="avatar bot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">${content}</div>
+                        <div class="message-time">${timestamp}</div>
+                    </div>
+                `;
+            } else if (type === 'alert') {
+                messageDiv.className = 'message security-alert';
+                messageDiv.innerHTML = `
+                    <div class="avatar alert-avatar">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            <strong>Security Alert:</strong> ${content}
+                        </div>
+                        <div class="message-time">${timestamp}</div>
+                    </div>
+                `;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function appendSecurityLog(logData) {
+            const chatContainer = document.getElementById('chatContainer');
+            const logContainer = document.createElement('div');
+            logContainer.className = 'log-container';
+            
+            // Create toggle button
+            const toggleButton = document.createElement('div');
+            toggleButton.className = 'toggle-log';
+            toggleButton.innerHTML = '<i class="fas fa-shield-alt"></i> Show Security Log <i class="fas fa-chevron-down"></i>';
+            toggleButton.onclick = function() {
+                const logElement = this.nextElementSibling;
+                if (logElement.style.display === 'none' || !logElement.style.display) {
+                    logElement.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-shield-alt"></i> Hide Security Log <i class="fas fa-chevron-up"></i>';
+                } else {
+                    logElement.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-shield-alt"></i> Show Security Log <i class="fas fa-chevron-down"></i>';
+                }
+            };
+            
+            // Create log content with improved formatting
+            const logContent = document.createElement('div');
+            logContent.className = 'security-log';
+            logContent.style.display = 'none';
+            
+            // Format log data in a more readable way
+            let logHTML = `<div class="log-header">
+                <div class="log-timestamp">Time: ${new Date(logData.timestamp).toLocaleString()}</div>
+            </div>`;
+            
+            logHTML += `<div class="log-section">
+                <div class="log-section-title">Input Analyzed:</div>
+                <div class="log-section-content">${logData.input}</div>
+            </div>`;
+            
+            logHTML += `<div class="log-section">
+                <div class="log-section-title">Security Checks:</div>
+                <div class="log-checks">`;
+            
+            logData.security_checks.forEach(check => {
+                const resultClass = check.result ? 'check-passed' : 'check-failed';
+                const resultIcon = check.result ? 
+                    '<i class="fas fa-check-circle"></i>' : 
+                    '<i class="fas fa-times-circle"></i>';
+                
+                logHTML += `<div class="log-check ${resultClass}">
+                    <div class="check-type">${resultIcon} ${check.type}</div>
+                    <div class="check-details">`;
+                
+                // Add specific details based on check type
+                if (check.type === 'SASE') {
+                    logHTML += `<div class="check-message">${check.message || 'No message provided'}</div>`;
+                } else if (check.type === 'JEM') {
+                    logHTML += `<div class="check-score">Energy Score: ${check.energy_score?.toFixed(4) || 'N/A'}</div>`;
+                } else if (check.type === 'DeepFool') {
+                    logHTML += `<div class="check-score">Perturbation: ${check.perturbation?.toFixed(4) || 'N/A'}</div>`;
+                }
+                
+                logHTML += `</div></div>`;
+            });
+            
+            logHTML += `</div></div>`;
+            
+            // Add response status
+            logHTML += `<div class="log-section">
+                <div class="log-section-title">Response Generated:</div>
+                <div class="log-section-content">${logData.response_generated ? 'Yes' : 'No'}</div>
+            </div>`;
+            
+            logContent.innerHTML = logHTML;
+            
+            logContainer.appendChild(toggleButton);
+            logContainer.appendChild(logContent);
+            chatContainer.appendChild(logContainer);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function resetChat() {
+            // Clear chat container
+            document.getElementById('chatContainer').innerHTML = '';
+            
+            // Reset chat on server
+            fetch('/api/reset', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage('bot', data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                appendMessage('alert', 'Failed to reset chat.');
+            });
+        }
+        
+        function setStatus(status) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            statusDot.className = 'status-dot ' + status;
+            
+            switch(status) {
+                case 'active':
+                    statusText.textContent = 'System Active';
+                    break;
+                case 'processing':
+                    statusText.textContent = 'Processing...';
+                    break;
+                case 'error':
+                    statusText.textContent = 'Error';
+                    break;
+                default:
+                    statusText.textContent = 'System Active';
+            }
+        }
+        
+        // Press Enter to send message
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Function to toggle technical info visibility
+        function toggleTechnicalInfo() {
+            const infoElement = document.getElementById('technicalInfo');
+            const toggleButton = document.querySelector('.security-info-toggle');
+            
+            if (infoElement.style.display === 'none') {
+                infoElement.style.display = 'block';
+                toggleButton.innerHTML = '<i class="fas fa-info-circle"></i> Hide Technical Details';
+            } else {
+                infoElement.style.display = 'none';
+                toggleButton.innerHTML = '<i class="fas fa-info-circle"></i> Show Technical Details';
+            }
+        }
+    </script>
+</body>
+</html>
