@@ -161,26 +161,6 @@ Detects adversarial prompts designed to manipulate AI models and prevents malici
 
 ---
 
-## 📸 Screenshots
-
-### Home Page
-
-_Add Screenshot_
-
-### Login Page
-
-_Add Screenshot_
-
-### Chat Interface
-
-_Add Screenshot_
-
-### Security Detection
-
-_Add Screenshot_
-
----
-
 ## 📈 Results
 
 - Improved chatbot security against adversarial attacks.
